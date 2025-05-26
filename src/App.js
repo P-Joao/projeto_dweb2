@@ -1,4 +1,7 @@
 import Tabela from './components/tabela';
+import Topo from './components/topo'
+import Principal from './components/principal'
+import Rodape from './components/rodape'
 import './App.css';
 import React, { Component } from 'react';
 
@@ -34,14 +37,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-        </header>
-        <Tabela
+        <Topo />
+        <Principal />
+        <Rodape />
+        {/*<Tabela
           filmes={this.state.filmes}
           excluirLinha={this.handlerExcluirLinha}
           ordernarCrescente={this.handlerOrdernarCrescente}
           ordernarDecrescente={this.handlerOrdernarDecrescente}
-        />
+        />*/}
       </div>
     )
   }
