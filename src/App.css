@@ -4,7 +4,10 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Zain", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size:calc(12px + 1vw);
 }
 
 .topo {
@@ -21,6 +24,11 @@ body {
   text-decoration: none;
 }
 
+.logo:hover {
+  color: white;
+  text-decoration: none;
+}
+
 .navegacao {
   display: flex;
   justify-content: space-around;
@@ -31,6 +39,11 @@ body {
 .navegacao li a {
   color: white;
   text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navegacao li a:hover {
+  text-shadow: 0 0 10px #ffffff;
 }
 
 main {
@@ -42,6 +55,7 @@ main {
 main h2 {
   text-align: center;
 }
+
 main .sub-title {
   text-align: center;
 }
@@ -58,6 +72,7 @@ main .card ul {
 
 main .card ul li {
   max-width: 200px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;

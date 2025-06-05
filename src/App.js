@@ -4,18 +4,24 @@ import Principal from './components/principal'
 import Rodape from './components/rodape'
 import './App.css';
 import React, { Component } from 'react';
+import axios from 'axios'
+import BuscaFilmes from './components/buscaFilmes'
 
 class App extends Component {
   state = {
     filmes: []
   };
-  componentDidMount() {
-    fetch("../api/filmes.json")
-      .then(response => response.json())
-      .then(filmes => this.setState({ filmes }))
-      .catch(function (error) {
-        console.log("Erro na requisição")
-      })
+  async componentDidMount() {
+    try {
+      const { data: livros } = await axios.get('url da api tmdb');
+      this.setState({ filmes });
+    } catch (error) {
+      console.log(error);
+      document.querySelectorAll('.principal')[0].insertAdjacentElement(
+        "beforeend",
+        "<p class='erro'>Mensagem erro</p>"
+      );
+    }
   }
   handlerExcluirLinha = imdb_id => {
     const filmes = this.state.filmes.filter(filme => filme.imdb_id !== imdb_id);
