@@ -7,7 +7,18 @@ body {
   font-family: "Zain", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size:calc(12px + 1vw);
+  font-size: calc(12px + 1vw);
+  min-height: 100vh;
+}
+
+.App,
+#root {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
 }
 
 .topo {
@@ -46,10 +57,14 @@ body {
   text-shadow: 0 0 10px #ffffff;
 }
 
+.Principal {
+  flex-grow: 1;
+}
+
 main {
   background-color: #313131;
   color: white;
-  padding: 10px;
+  padding: 10px 10%;
 }
 
 main h2 {
@@ -68,22 +83,113 @@ main .card ul {
   display: flex;
   justify-content: space-between;
   list-style: none;
+  flex-wrap: wrap;
 }
 
 main .card ul li {
   max-width: 200px;
   min-width: 200px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  margin: 10px 0;
   background-color: rgb(80, 80, 80);
   border-radius: 5px;
+  font-size: calc(0.8vw + 10px);
 }
 
 main .card ul li img {
-  max-width: 100px;
+  max-width: 100%;
+  overflow: hidden;
   border-radius: 5px;
+}
+
+.botao-coracao {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  background-color: #21212142;
+  color: #ff4d4d;
+  border: 0;
+  margin-top: 5px;
+  padding: 10px 20px;
+  border-radius: 200%;
+  font-size: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para o coração preenchido */
+.botao-coracao.preenchido {
+    background-color: rgba(255, 255, 255, 0.253); /* Fundo vermelho */
+    padding: 10px 15px;
+    color: white; /* Cor do ícone e texto brancos */
+    border-color: #ff4d4d; /* Borda vermelha também */
+}
+
+.botao-coracao:hover {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.botao-coracao.preenchido:hover {
+    background-color: white;
+    padding: 10px 15px;
+    color: white; /* Cor do ícone e texto brancos */
+    border-color: #ff4d4d; /* Borda vermelha também */
+}
+
+/* ----------------- ECONTRAR FILMES -------------*/
+/* App.css (ou onde você centraliza seus estilos) */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    width: calc(100% - 20px); /* Para compensar o padding */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garante que padding não aumenta a largura total */
+}
+
+.form-group-genre-year {
+  width: calc(50%);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-search {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-search:hover {
+    background-color: #0056b3;
 }
 
 
