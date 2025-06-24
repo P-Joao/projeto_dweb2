@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './home';
 import MinhaLista from './minhaLista';
 import EncontrarFilmes from './encontrarFilmes';
+import MinhasReviews from './minhasReviews'; 
+import Amigos from './amigos'; 
 import axios from 'axios';
 
 const API_KEY = 'a6d8a986052cb9fc11fbd93036ddb036';
@@ -118,6 +120,8 @@ export default function Principal() {
                         />
                     }
                 />
+                <Route path="/minhas-reviews" element={<MinhasReviews />} />
+                <Route path="/amigos" element={<Amigos/>}></Route>
             </Routes>
         </main>
     );

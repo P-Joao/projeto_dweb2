@@ -1,0 +1,28 @@
+/* components/AmigosEmConstrucao.css (ou App.css) */
+
+.em-construcao-card {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 50px;
+    background-color: #fff8e1; /* Fundo amarelo claro para destaque */
+    border: 1px solid #ffe082; /* Borda amarela */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.em-construcao-card h2 {
+    color: #f57f17; /* Laranja escuro */
+    margin-bottom: 20px;
+}
+
+.em-construcao-card p {
+    color: #616161;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.em-construcao-card .sub-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff9800; /* Laranja vibrante */
+}

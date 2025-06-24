@@ -6,8 +6,8 @@ export default function Navegacao() {
     <ul className='navegacao'>
         <li><Link to="/minha-lista">Minha Lista</Link></li>
         <li><Link to="/encontrar-filmes">Encontrar Filmes</Link></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">Amigos</a></li>
+        <li><Link to="/minhas-reviews">Reviews</Link></li>
+        <li><Link to="/amigos">Amigos</Link></li>
     </ul>
   )
 }

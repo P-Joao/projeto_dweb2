@@ -106,6 +106,8 @@ main .card ul li img {
   border-radius: 5px;
 }
 
+/*------- BOTÃO FAVORITAR --------*/
+
 .botao-coracao {
   position: relative;
   bottom: 0;
@@ -123,10 +125,10 @@ main .card ul li img {
 
 /* Estilo para o coração preenchido */
 .botao-coracao.preenchido {
-    background-color: rgba(255, 255, 255, 0.253); /* Fundo vermelho */
+    background-color: rgba(255, 255, 255, 0.253);
     padding: 10px 15px;
-    color: white; /* Cor do ícone e texto brancos */
-    border-color: #ff4d4d; /* Borda vermelha também */
+    color: white;
+    border-color: #ff4d4d;
 }
 
 .botao-coracao:hover {
@@ -137,13 +139,35 @@ main .card ul li img {
 .botao-coracao.preenchido:hover {
     background-color: white;
     padding: 10px 15px;
-    color: white; /* Cor do ícone e texto brancos */
-    border-color: #ff4d4d; /* Borda vermelha também */
+    color: white;
+    border-color: #ff4d4d;
+}
+
+/*------- BOTÃO AVALIAR --------*/
+
+.movie-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.botao-review {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-review:hover {
+    background-color: #218838;
 }
 
 /* ----------------- ECONTRAR FILMES -------------*/
-/* App.css (ou onde você centraliza seus estilos) */
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -158,12 +182,12 @@ main .card ul li img {
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select {
-    width: calc(100% - 20px); /* Para compensar o padding */
+    width: calc(100% - 20px);
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-    box-sizing: border-box; /* Garante que padding não aumenta a largura total */
+    box-sizing: border-box;
 }
 
 .form-group-genre-year {
@@ -190,51 +214,6 @@ main .card ul li img {
 
 .btn-search:hover {
     background-color: #0056b3;
-}
-
-
-table {
-  background-color: gainsboro;
-  border-radius: 5px;
-  padding: 3px;
-}
-
-.container-setinhas {
-  display: inline-block;
-  width: 20px;
-  height: 40px;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-.container-setinhas>div {
-  cursor: pointer;
-}
-
-td {
-  min-width: 100px;
-  text-align: center;
-  padding: 10px;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: grey;
-  color: white;
-}
-
-tbody button {
-  border: 0;
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px;
-  color: white;
-  background-color: red;
-  cursor: pointer;
-  transition: all 0.08s;
-}
-
-tbody button:hover {
-  background-color: rgb(107, 0, 0);
 }
 
 footer {
