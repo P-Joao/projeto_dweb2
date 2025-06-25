@@ -1,11 +1,11 @@
-// components/Filme.js
 import React, { useState, useEffect } from 'react';
 import ReviewModal from './reviewModal';
+import InfoFilme from './infoFilme';
 
 export default function Filme({ el }) {
     const [isFavorited, setIsFavorited] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
-    // Novo estado para armazenar a review existente para pré-preenchimento
+    const [showInfoModal, setShowInfoModal] = useState(false);
     const [existingReview, setExistingReview] = useState(null);
 
     const displayTitle = el?.title && el.title.length > 19
@@ -16,22 +16,18 @@ export default function Filme({ el }) {
         ? `https://image.tmdb.org/t/p/w500${el.poster_path}`
         : 'https://via.placeholder.com/500x750?text=Sem+Imagem';
 
-    // useEffect para verificar o localStorage quando o componente é montado ou 'el.id' muda
     useEffect(() => {
         const favoritos = JSON.parse(localStorage.getItem('filmesFavoritos')) || [];
         const favoritedStatus = favoritos.some(filme => filme.id === el.id);
         setIsFavorited(favoritedStatus);
 
-        // **Nova lógica: Carrega a review existente para este filme**
         const allReviews = JSON.parse(localStorage.getItem('filmesReviews')) || {};
         if (allReviews[el.id] && allReviews[el.id].length > 0) {
-            // Se houver reviews para este filme, pegue a última (ou a primeira, ou a que quiser)
-            // Aqui pegamos a última, assumindo que é a mais recente/relevante para edição.
             setExistingReview(allReviews[el.id][allReviews[el.id].length - 1]);
         } else {
-            setExistingReview(null); // Nenhuma review existente
+            setExistingReview(null);
         }
-    }, [el.id]); // Re-executa se o ID do filme mudar
+    }, [el.id]);
 
     const handleFavoriteClick = () => {
         let favoritos = JSON.parse(localStorage.getItem('filmesFavoritos')) || [];
@@ -54,16 +50,12 @@ export default function Filme({ el }) {
         localStorage.setItem('filmesFavoritos', JSON.stringify(favoritos));
     };
 
-    // Função para abrir o modal de review
     const handleOpenReviewModal = () => {
         setShowReviewModal(true);
     };
 
-    // Função para fechar o modal de review
     const handleCloseReviewModal = () => {
         setShowReviewModal(false);
-        // Após fechar o modal (e possivelmente salvar), re-verifica o localStorage
-        // para garantir que 'existingReview' esteja atualizado.
         const allReviews = JSON.parse(localStorage.getItem('filmesReviews')) || {};
         if (allReviews[el.id] && allReviews[el.id].length > 0) {
             setExistingReview(allReviews[el.id][allReviews[el.id].length - 1]);
@@ -72,7 +64,6 @@ export default function Filme({ el }) {
         }
     };
 
-    // Função para submeter a review (salvar no localStorage)
     const handleSubmitReview = (reviewData) => {
         let allReviews = JSON.parse(localStorage.getItem('filmesReviews')) || {};
 
@@ -80,15 +71,13 @@ export default function Filme({ el }) {
             allReviews[el.id] = [];
         }
 
-        // Se existe uma review que estamos editando (identificada pelo timestamp), atualize-a
         if (existingReview && existingReview.timestamp) {
             allReviews[el.id] = allReviews[el.id].map(review =>
                 review.timestamp === existingReview.timestamp
-                    ? { ...reviewData, movieId: el.id, movieTitle: el.title } // Atualiza os dados da review
+                    ? { ...reviewData, movieId: el.id, movieTitle: el.title }
                     : review
             );
         } else {
-            // Caso contrário, adicione uma nova review
             allReviews[el.id].push({
                 movieId: el.id,
                 movieTitle: el.title,
@@ -101,14 +90,25 @@ export default function Filme({ el }) {
         localStorage.setItem('filmesReviews', JSON.stringify(allReviews));
         alert(`Review para "${el.title}" salva com sucesso!`);
         console.log(`Review para ${el.title}:`, reviewData);
-        // Não chame handleCloseReviewModal aqui. O modal é fechado pelo onClose no ReviewModal.
-        // A função onClose do modal já chamará o handleCloseReviewModal, que atualizará existingReview.
+    };
+
+    const handleOpenInfoModal = () => {
+        setShowInfoModal(true);
+    };
+
+    const handleCloseInfoModal = () => {
+        setShowInfoModal(false);
     };
 
     return (
         <li key={el.id}>
             {displayTitle}
-            <img src={imageUrl} alt={el?.title || 'Filme'} />
+            <img
+                src={imageUrl}
+                alt={el?.title || 'Filme'}
+                onClick={handleOpenInfoModal} // Abre o modal de informações ao clicar no poster
+                style={{ cursor: 'pointer' }} // Indica que é clicável
+            />
             <div className="movie-actions">
                 <button
                     className={`botao-coracao ${isFavorited ? 'preenchido' : 'contorno'}`}
@@ -126,13 +126,18 @@ export default function Filme({ el }) {
 
             <ReviewModal
                 show={showReviewModal}
-                onClose={handleCloseReviewModal} // Esta função já contém a lógica de re-verificar
+                onClose={handleCloseReviewModal}
                 onSubmit={handleSubmitReview}
                 movieTitle={el?.title || 'Filme Desconhecido'}
                 movieId={el?.id}
-                // ** Passa a review existente para pré-preencher o modal **
                 initialRating={existingReview ? existingReview.rating : 0}
                 initialReviewText={existingReview ? existingReview.reviewText : ''}
+            />
+
+            <InfoFilme
+                show={showInfoModal}
+                onClose={handleCloseInfoModal}
+                movieId={el?.id} // Passa o ID do filme para o modal buscar os detalhes
             />
         </li>
     );

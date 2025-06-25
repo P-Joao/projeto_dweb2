@@ -1,14 +1,18 @@
-// components/MinhasReviews.js
 import React, { useState, useEffect } from 'react';
 import ReviewModal from './reviewModal';
-import './minhasReviews.css';
+import './minhasReviews.css'; 
 
 export default function MinhasReviews() {
-    const [allReviews, setAllReviews] = useState({});
+    const [allReviews, setAllReviews] = useState({}); // Objeto de reviews do localStorage
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // currentReviewData vai armazenar a review sendo editada, incluindo o ID do filme
-    const [currentReviewData, setCurrentReviewData] = useState(null);
+    const [currentReviewData, setCurrentReviewData] = useState(null); // Armazena os dados do filme/review para edição
 
+    // sortColumn: 'movieTitle', 'rating', 'timestamp' (para data)
+    // sortDirection: 'asc' (ascendente) ou 'desc' (descendente)
+    const [sortColumn, setSortColumn] = useState('timestamp'); // Padrão: ordenar por data
+    const [sortDirection, setSortDirection] = useState('desc'); // Padrão: mais recente primeiro
+
+    // Carrega as reviews do localStorage
     useEffect(() => {
         const storedReviews = JSON.parse(localStorage.getItem('filmesReviews')) || {};
         setAllReviews(storedReviews);
@@ -41,32 +45,28 @@ export default function MinhasReviews() {
         }
     };
 
-    // Função para abrir o modal de edição
     const handleEditReview = (movieId, reviewToEdit) => {
-        // Passa o ID do filme, título, avaliação e texto para o modal
         setCurrentReviewData({
-            movieId: movieId, // ID do filme (chave do objeto allReviews)
-            movieTitle: reviewToEdit.movieTitle, // O título do filme
+            movieId: movieId,
+            movieTitle: reviewToEdit.movieTitle,
             initialRating: reviewToEdit.rating,
             initialReviewText: reviewToEdit.reviewText,
-            timestamp: reviewToEdit.timestamp // Para identificar qual review estamos editando
+            timestamp: reviewToEdit.timestamp
         });
         setIsModalOpen(true);
     };
 
-    // Função para salvar/atualizar a review (recebida do modal)
     const handleSubmitReview = (reviewDataFromModal) => {
         const { movieId, movieTitle, rating, reviewText, timestamp } = reviewDataFromModal;
         const updatedReviews = { ...allReviews };
 
-        // Lógica de edição
-        if (currentReviewData && currentReviewData.timestamp) { // Se estamos no modo de edição
+        if (currentReviewData && currentReviewData.timestamp) {
             updatedReviews[currentReviewData.movieId] = updatedReviews[currentReviewData.movieId].map(review =>
                 review.timestamp === currentReviewData.timestamp
-                    ? { movieId: currentReviewData.movieId, movieTitle: currentReviewData.movieTitle, rating, reviewText, timestamp } // Atualiza a review
+                    ? { movieId, movieTitle, rating, reviewText, timestamp }
                     : review
             );
-        } else { // Lógica para uma nova review (caso o modal seja usado para nova review)
+        } else {
             if (!updatedReviews[movieId]) {
                 updatedReviews[movieId] = [];
             }
@@ -77,17 +77,57 @@ export default function MinhasReviews() {
         setAllReviews(updatedReviews);
         alert('Review salva com sucesso!');
         setIsModalOpen(false);
-        setCurrentReviewData(null); // Limpa o estado de edição após fechar
+        setCurrentReviewData(null);
     };
 
-    // Converte o objeto de reviews em um array de reviews individuais para mapear na tabela
+    // Converte o objeto de reviews em um array plano para mapear na tabela
     const reviewsToDisplay = Object.keys(allReviews).flatMap(movieId =>
         allReviews[movieId].map(review => ({
             ...review,
-            movieId: movieId // Garante que o ID do filme esteja disponível
+            movieId: movieId,
         }))
     );
 
+
+    const sortedReviews = [...reviewsToDisplay].sort((a, b) => {
+        let compareValue = 0;
+
+        switch (sortColumn) {
+            case 'movieTitle':
+                compareValue = a.movieTitle.localeCompare(b.movieTitle);
+                break;
+            case 'rating':
+                compareValue = a.rating - b.rating;
+                break;
+            case 'timestamp': // Ordena por data
+                compareValue = new Date(a.timestamp) - new Date(b.timestamp);
+                break;
+            default:
+                break;
+        }
+
+        return sortDirection === 'asc' ? compareValue : -compareValue;
+    });
+
+    // Função para lidar com o clique nos botões de ordenação
+    const handleSort = (column) => {
+        // Se a mesma coluna for clicada, inverte a direção
+        if (sortColumn === column) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            // Se for uma nova coluna, define a coluna e a direção padrão (ascendente)
+            setSortColumn(column);
+            setSortDirection('asc');
+        }
+    };
+
+    // Função auxiliar para exibir o ícone de direção de ordenação
+    const getSortArrow = (column) => {
+        if (sortColumn === column) {
+            return sortDirection === 'asc' ? ' ▲' : ' ▼';
+        }
+        return '';
+    };
 
     return (
         <>
@@ -97,28 +137,34 @@ export default function MinhasReviews() {
             </div>
 
             <div className="card">
-                {reviewsToDisplay.length > 0 ? (
+                {sortedReviews.length > 0 ? (
                     <table className="reviews-table">
                         <thead>
                             <tr>
-                                <th>Filme</th>
-                                <th>Avaliação</th>
-                                <th>Review</th>
-                                <th>Data</th>
+                                {/* Botões de ordenação nas colunas */}
+                                <th onClick={() => handleSort('movieTitle')} className="sortable-header">
+                                    Filme {getSortArrow('movieTitle')}
+                                </th>
+                                <th onClick={() => handleSort('rating')} className="sortable-header">
+                                    Avaliação {getSortArrow('rating')}
+                                </th>
+                                <th>Review</th> {/* Não ordenável */}
+                                <th onClick={() => handleSort('timestamp')} className="sortable-header">
+                                    Data {getSortArrow('timestamp')}
+                                </th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {reviewsToDisplay.map((review, index) => (
-                                // Use um key único, aqui pode ser o timestamp ou o id do filme + timestamp
+                            {sortedReviews.map((review, index) => (
                                 <tr key={`${review.movieId}-${review.timestamp || index}`}>
-                                    <td>{review.movieTitle}</td> {/* **CORREÇÃO AQUI: Acessando review.movieTitle** */}
-                                    <td className="star-rating-display">
+                                    <td data-label="Filme">{review.movieTitle}</td>
+                                    <td data-label="Avaliação" className="star-rating-display">
                                         {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                                     </td>
-                                    <td>{review.reviewText || 'Nenhuma review escrita.'}</td>
-                                    <td>{new Date(review.timestamp).toLocaleDateString('pt-BR')}</td>
-                                    <td>
+                                    <td data-label="Review">{review.reviewText || 'Nenhuma review escrita.'}</td>
+                                    <td data-label="Data">{new Date(review.timestamp).toLocaleDateString('pt-BR')}</td>
+                                    <td data-label="Ações">
                                         <button
                                             className="action-button edit"
                                             onClick={() => handleEditReview(review.movieId, review)}
@@ -141,15 +187,13 @@ export default function MinhasReviews() {
                 )}
             </div>
 
-            {/* Modal de Review (reutilizado) */}
             <ReviewModal
                 show={isModalOpen}
                 onClose={() => {
                     setIsModalOpen(false);
-                    setCurrentReviewData(null); // Limpa o estado ao fechar
+                    setCurrentReviewData(null);
                 }}
                 onSubmit={handleSubmitReview}
-                // Passa os dados para o modal pré-preencher (se currentReviewData não for nulo)
                 movieTitle={currentReviewData?.movieTitle || ''}
                 movieId={currentReviewData?.movieId || ''}
                 initialRating={currentReviewData?.initialRating || 0}

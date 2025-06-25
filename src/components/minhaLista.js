@@ -1,9 +1,9 @@
 // components/MinhaLista.js (Exemplo de Paginação Manual)
 import React, { useState, useEffect } from 'react';
 import Filme from './filme';
-import Pagination from './pagination'; // Importe o componente de paginação
+import Pagination from './pagination';
 
-const ITEMS_PER_PAGE = 10; // Defina quantos filmes por página você quer
+const ITEMS_PER_PAGE = 10;
 
 export default function MinhaLista() {
     const [filmesFavoritos, setFilmesFavoritos] = useState([]);
@@ -27,7 +27,7 @@ export default function MinhaLista() {
         return () => {
             window.removeEventListener('storage', carregarFavoritos);
         };
-    }, [currentPage]); // Adicione currentPage como dependência para recarregar se mudar
+    }, [currentPage]);
 
     // Calcula os filmes a serem exibidos na página atual
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;

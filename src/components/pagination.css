@@ -1,12 +1,11 @@
-/* components/Pagination.css */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* Para quebrar linha em telas pequenas */
-    gap: 8px; /* Espaçamento entre os botões */
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .pagination-button {

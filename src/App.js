@@ -1,9 +1,8 @@
-// App.js
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'; // Importe BrowserRouter
-import Topo from './components/topo'; // Verifique o case: Topo ou topo
-import Principal from './components/principal'; // Verifique o case: Principal ou principal
-import Rodape from './components/rodape'; // Verifique o case: Rodape ou rodape
+import { BrowserRouter as Router } from 'react-router-dom';
+import Topo from './components/topo';
+import Principal from './components/principal';
+import Rodape from './components/rodape';
 import './App.css';
 
 const App = function() {
@@ -11,7 +10,7 @@ const App = function() {
         <Router> {/* Envolve toda a aplicação para habilitar o roteamento */}
             <div className="App">
                 <Topo />
-                <Principal /> {/* Principal agora contém as rotas */}
+                <Principal /> {/* Contém as rotas */}
                 <Rodape />
             </div>
         </Router>

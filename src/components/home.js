@@ -1,9 +1,7 @@
-// components/home.js
 import React from 'react';
 import Filme from './filme';
-import Pagination from './pagination'; // Importe o componente de paginação
+import Pagination from './pagination';
 
-// Agora Home recebe props de paginação
 export default function Home({ filmes, currentPage, totalPages, onPageChange }) {
     return (
         <>
@@ -19,7 +17,7 @@ export default function Home({ filmes, currentPage, totalPages, onPageChange }) 
                         <Filme key={el.id} el={el} />
                     ))}
                 </ul>
-                {/* Adicione a paginação aqui */}
+
                 {totalPages > 1 && ( // Renderiza a paginação apenas se houver mais de 1 página
                     <Pagination
                         currentPage={currentPage}

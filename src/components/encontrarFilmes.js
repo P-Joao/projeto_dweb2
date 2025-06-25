@@ -1,17 +1,16 @@
-// components/EncontrarFilmes.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Filme from './filme';
 import Pagination from './pagination';
 
-const API_KEY = 'a6d8a986052cb9fc11fbd93036ddb036'; // Usado apenas para fetchGenres aqui
+const API_KEY = 'a6d8a986052cb9fc11fbd93036ddb036';
 
 export default function EncontrarFilmes({
-    onSearch, // Função do Principal para iniciar busca
+    onSearch,
     searchResults,
     currentPage,
     totalPages,
-    onPageChange, // Função do Principal para mudar de página (com filtros persistidos)
+    onPageChange,
     persistedSearchEndpoint,
     persistedSearchParams
 }) {
@@ -26,7 +25,7 @@ export default function EncontrarFilmes({
             try {
                 const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list`, {
                     params: {
-                        api_key: API_KEY, // Apenas para a busca de gêneros
+                        api_key: API_KEY,
                         language: 'pt-BR',
                     },
                 });
@@ -41,7 +40,6 @@ export default function EncontrarFilmes({
     const handleSearch = (e) => {
         e.preventDefault();
 
-        // ** A CORREÇÃO PRINCIPAL ESTÁ AQUI: MONTANDO OS PARÂMETROS **
         const params = {};
 
         // Adiciona a query se searchTerm existir
@@ -80,7 +78,6 @@ export default function EncontrarFilmes({
             onPageChange(persistedSearchEndpoint, persistedSearchParams, newPage);
         } else {
             console.warn("Nenhum parâmetro de busca anterior encontrado para paginar. Realize uma busca primeiro.");
-            // Opcional: Aqui você pode desabilitar os botões de paginação ou mostrar uma mensagem.
         }
     };
 

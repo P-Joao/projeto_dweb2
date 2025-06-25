@@ -1,10 +1,9 @@
-// components/Pagination.js
 import React from 'react';
-import './pagination.css'; // Vamos criar este CSS
+import './pagination.css';
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
     const pages = [];
-    // Define um limite de botões de página para não ficar muito longo
+    
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);

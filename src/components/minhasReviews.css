@@ -13,6 +13,7 @@
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    vertical-align: top;
 }
 
 .reviews-table th {
@@ -22,6 +23,22 @@
     text-transform: uppercase;
     font-size: 0.9em;
 }
+
+.reviews-table th.sortable-header {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reviews-table th.sortable-header:hover {
+    background-color: #e9ecef;
+}
+
+
+.reviews-table th.sortable-header span {
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
 
 .reviews-table tbody tr:hover {
     background-color: #f1f1f1;
@@ -39,16 +56,20 @@
 }
 
 .action-button {
+    display: inline-block;
     background-color: #007bff;
     color: white;
     border: none;
     padding: 6px 12px;
-    width: 100%;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.85em;
     margin-right: 5px;
     transition: background-color 0.2s ease;
+}
+
+.action-button:last-child {
+    margin-right: 0;
 }
 
 .action-button.edit {
@@ -66,4 +87,35 @@
 
 .action-button.delete:hover {
     background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .reviews-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .reviews-table thead, .reviews-table tbody, .reviews-table th, .reviews-table td, .reviews-table tr {
+        display: block;
+    }
+    .reviews-table th {
+        text-align: right;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    .reviews-table td {
+        border-bottom: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    .reviews-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
 }

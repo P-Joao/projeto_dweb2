@@ -1,0 +1,43 @@
+.not-found-card {
+    text-align: center;
+    padding: 60px 20px;
+    margin-top: 50px;
+    background-color: #ffebee;
+    border: 1px solid #ef9a9a;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.not-found-card h2 {
+    color: #c62828;
+    margin-bottom: 25px;
+    font-size: 2.5em;
+}
+
+.not-found-card .sub-title {
+    color: #d32f2f;
+    font-size: 1.2em;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.not-found-card p {
+    color: #424242;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.back-home-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.back-home-button:hover {
+    background-color: #0056b3;
+}

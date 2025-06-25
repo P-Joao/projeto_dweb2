@@ -1,6 +1,5 @@
-// components/AmigosEmConstrucao.js
 import React from 'react';
-import './amigos.css'; // Opcional: para estilos específicos
+import './amigos.css';
 
 export default function Amigos() {
     return (

@@ -1,0 +1,116 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content.info-filme-modal {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 95%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.info-filme-modal .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.info-filme-modal .close-button:hover {
+    color: #000;
+}
+
+.movie-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.movie-details-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .movie-details-header {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+    }
+}
+
+.movie-poster {
+    width: 180px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-details-header .header-text {
+    flex: 1;
+}
+
+.movie-details-header h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 2em;
+}
+
+.movie-details-header .original-title {
+    font-style: italic;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.movie-details-header p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.movie-details-body h3 {
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.movie-details-body p {
+    line-height: 1.6;
+    color: #444;
+}
+
+.movie-details-body .tagline {
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.error-message {
+    color: #dc3545;
+    text-align: center;
+    font-weight: bold;
+}
